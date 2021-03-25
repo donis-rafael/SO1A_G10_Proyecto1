@@ -79,16 +79,6 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		state        string `json:"state"`
 	}
 
-	defer r.Body.Close()
-	var p1 Person
-	body, _ := ioutil.ReadAll(r.Body)
-	json.Unmarshal(body, &p1)
-	fmt.Println(">> CLIENT NEW: Devolviendo form.html", p1.name)
-
-	instance_name := os.Getenv("NAME")
-	fmt.Println(">> CLIENT: Manejando peticion HTTP CLIENTE: ", instance_name)
-	// Comprobamos que el path sea exactamente '/' sin parámetros
-
 	if r.URL.Path != "/" {
 		http.Error(w, "404 not found.", http.StatusNotFound)
 		return
@@ -119,13 +109,13 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
+		myBody := ioutil.NopCloser(bytes.NewBuffer(body))
 
-		fmt.Println(">> BODY: Iniciando  ", r.Body)
+		fmt.Println(">> BODY: Iniciando  ", myBody)
 
 		var p Person
 
-		dec := json.NewDecoder(r.Body)
+		dec := json.NewDecoder(myBody)
 		//dec.DisallowUnknownFields()
 		erre := dec.Decode(&p)
 		if erre != nil {
