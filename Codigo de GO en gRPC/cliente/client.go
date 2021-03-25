@@ -80,16 +80,10 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defer r.Body.Close()
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	var data Person
-	if erra := json.NewDecoder(r.Body).Decode(&data); erra != nil {
-		fmt.Println(erra)
-	}
-	res, err := json.Marshal(&data)
-	fmt.Println(">> CLIENT: Iniciando mensajes", res)
-	fmt.Println(">> CLIENT: Iniciando mensajes 2", err)
-	w.Write(res)
+	var p1 Person
+	body, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(body, &p1)
+	fmt.Println(">> CLIENT NEW: Devolviendo form.html", p1)
 
 	instance_name := os.Getenv("NAME")
 	fmt.Println(">> CLIENT: Manejando peticion HTTP CLIENTE: ", instance_name)
