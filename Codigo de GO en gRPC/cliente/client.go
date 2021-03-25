@@ -113,6 +113,10 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Println(">> BODY: Iniciando  ", myBody)
 
+		buf := new(bytes.Buffer)
+		buf.ReadFrom(myBody)
+		fmt.Println(">> BODY: Iniciando 2 ", buf.String())
+
 		var p Person
 
 		dec := json.NewDecoder(myBody)
