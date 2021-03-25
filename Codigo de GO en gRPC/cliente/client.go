@@ -79,10 +79,18 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		state        string `json:"state"`
 	}
 
-	var emp Person
-	decoder := json.NewDecoder(r.Body)
-	decoder.Decode(&emp)
-	fmt.Printf("%+v\n", emp)
+	defer r.Body.Close()
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	var data Person
+	if erra := json.NewDecoder(r.Body).Decode(&data); erra != nil {
+		fmt.Println(erra)
+	}
+	res, err := json.Marshal(&data)
+	fmt.Println(">> CLIENT: Iniciando mensajes", res)
+	fmt.Println(">> CLIENT: Iniciando mensajes 2", err)
+	w.Write(res)
+
 	instance_name := os.Getenv("NAME")
 	fmt.Println(">> CLIENT: Manejando peticion HTTP CLIENTE: ", instance_name)
 	// Comprobamos que el path sea exactamente '/' sin parámetros
