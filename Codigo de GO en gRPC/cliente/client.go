@@ -90,7 +90,26 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Comprobamos el tipo de peticion HTTP
-	fmt.Println(">> CLIENT: Recibiendo: ", r.Body)
+	// Use http.MaxBytesReader to enforce a maximum read of 1MB from the
+	// response body. A request body larger than that will now result in
+	// Decode() returning a "http: request body too large" error.
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
+
+	// Setup the decoder and call the DisallowUnknownFields() method on it.
+	// This will cause Decode() to return a "json: unknown field ..." error
+	// if it encounters any extra unexpected fields in the JSON. Strictly
+	// speaking, it returns an error for "keys which do not match any
+	// non-ignored, exported fields in the destination".
+	dec := json.NewDecoder(r.Body)
+	dec.DisallowUnknownFields()
+
+	var p Person
+	err := json.NewDecoder(r.Body).Decode(&p)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	fmt.Println(">> CLIENT: Recibiendo: ", p)
 
 	switch r.Method {
 
@@ -108,12 +127,6 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		//	fmt.Fprintf(w, "ParseForm() err: %v", err)
 		//	return
 		//}
-		var p Person
-		err := json.NewDecoder(r.Body).Decode(&p)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
 
 		// Obtener el nombre enviado desde la forma
 		name := p.name
