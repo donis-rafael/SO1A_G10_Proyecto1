@@ -3,13 +3,19 @@ package main
 
 // Importar dependencias, notar que estamos en un módulo llamado grpctuiter
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net"
+
+	"net/http"
 
 	"os"
 
 	"log"
-	"net"
+
 	"servergrpc/greet.pb/greetpb"
 
 	"google.golang.org/grpc"
@@ -38,6 +44,25 @@ func (*server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.G
 
 	fmt.Printf(">> SERVER: %s\n", result)
 	// Creamos un nuevo objeto GreetResponse definido en el protofile
+
+	jsonData := map[string]string{"name": Name, "location": Location, "age": Age, "infectedtype": Infectedtype, "state": State}
+	jsonValue, _ := json.Marshal(jsonData)
+	//client := &http.Client{}
+	request, err := http.Post("http://node:3000/subscribers", "application/json", bytes.NewBuffer(jsonValue))
+	if err != nil {
+		fmt.Print(err.Error())
+	}
+	//result.Header.Add("Accept", "application/json")
+	//result.Header.Add("Content-Type", "application/json")
+
+	//resp, err := client.Do(request)
+	//request, err = http.Post("https://localhost/subscribers", "application/json", bytes.NewBuffer(jsonValue))
+	if err != nil {
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+	} else {
+		data, _ := ioutil.ReadAll(request.Body)
+		fmt.Println(string(data))
+	}
 	res := &greetpb.GreetResponse{
 		Result: result,
 	}
