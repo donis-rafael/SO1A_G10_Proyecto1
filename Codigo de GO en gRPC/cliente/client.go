@@ -25,11 +25,11 @@ import (
 type server struct{}
 
 type Person struct {
-	name         string `json:"name,omitempty"`
-	location     string `json:"location,omitempty"`
-	age          int    `json:"age,omitempty"`
-	infectedtype string `json:"infectedtype,omitempty"`
-	state        string `json:"state,omitempty"`
+	name         string `json:"name"`
+	location     string `json:"location"`
+	age          int    `json:"age"`
+	infectedtype string `json:"infectedtype"`
+	state        string `json:"state"`
 }
 
 // Funcion que realiza una llamada unaria
@@ -167,7 +167,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		var p Person
 
 		dec := json.NewDecoder(r.Body)
-		//dec.DisallowUnknownFields()
+		dec.DisallowUnknownFields()
 		err := dec.Decode(&p)
 		if err != nil {
 			var syntaxError *json.SyntaxError
