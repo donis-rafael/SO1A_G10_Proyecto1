@@ -32,6 +32,10 @@ type Person struct {
 	state        string `json:"state"`
 }
 
+type HttpReq struct {
+	HttpReq Person `json:"httpReq"`
+}
+
 // Funcion que realiza una llamada unaria
 func sendMessage(name string, location string, age string, infectedtype string, state string) {
 	server_host := os.Getenv("SERVER_HOST")
@@ -164,6 +168,16 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 
 		fmt.Println(">> BODY: Iniciando  ", r.Body)
+
+		var httpReq HttpReq
+		var people2 Person
+		errsa := json.Unmarshal(body, &httpReq)
+		if errsa != nil {
+			fmt.Println(errsa)
+			return
+		}
+		people2 = httpReq.HttpReq
+
 		var p Person
 
 		dec := json.NewDecoder(r.Body)
@@ -238,8 +252,8 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		// Obtener el nombre enviado desde la forma
 		name := p.name //r.FormValue("name")
 		// Obtener el mensaje enviado desde la forma
-		location := r.FormValue("location")
-		age := r.FormValue("age") //strconv.Itoa(p.age)
+		location := people2.location //r.FormValue("location")
+		age := r.FormValue("age")    //strconv.Itoa(p.age)
 		infectedtype := r.FormValue("infectedtype")
 		state := r.FormValue("state")
 
