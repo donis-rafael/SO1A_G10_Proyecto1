@@ -163,13 +163,13 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 
 		// Unmarshal
 		var p Person
-		errr = json.Unmarshal(body, &p)
-		if errr != nil {
-			http.Error(w, errr.Error(), 500)
+		errs = json.Unmarshal(body, &p)
+		if errs != nil {
+			http.Error(w, errs.Error(), 500)
 			return
 		}
 
-		output, err := json.Marshal(msg)
+		output, err := json.Marshal(p)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
