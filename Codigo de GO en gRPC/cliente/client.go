@@ -5,6 +5,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 
 	"fmt"
 	"io/ioutil"
@@ -222,9 +223,18 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 
 		fmt.Println(">> BODY: Iniciando  ", r.Body)
+		var p Person
 
+		dec := json.NewDecoder(r.Body)
+		dec.DisallowUnknownFields()
+		errs := dec.Decode(&p)
+		if errs != nil {
+			log.Printf("Error reading body: %v", errs)
+			http.Error(w, "can't read body", http.StatusBadRequest)
+			return
+		}
 		// Obtener el nombre enviado desde la forma
-		name := r.FormValue("name")
+		name := p.name //r.FormValue("name")
 		// Obtener el mensaje enviado desde la forma
 		location := r.FormValue("location")
 		age := r.FormValue("age") //strconv.Itoa(p.age)
