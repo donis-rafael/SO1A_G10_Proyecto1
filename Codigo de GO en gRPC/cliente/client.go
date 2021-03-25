@@ -78,6 +78,11 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		infectedtype string `json:"infectedtype"`
 		state        string `json:"state"`
 	}
+
+	var emp Person
+	decoder := json.NewDecoder(r.Body)
+	decoder.Decode(&emp)
+	fmt.Printf("%+v\n", emp)
 	instance_name := os.Getenv("NAME")
 	fmt.Println(">> CLIENT: Manejando peticion HTTP CLIENTE: ", instance_name)
 	// Comprobamos que el path sea exactamente '/' sin parámetros
