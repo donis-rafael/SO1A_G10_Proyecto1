@@ -162,8 +162,8 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Unmarshal
-		var msg Message
-		errr = json.Unmarshal(body, &msg)
+		var p Person
+		errr = json.Unmarshal(body, &p)
 		if errr != nil {
 			http.Error(w, errr.Error(), 500)
 			return
@@ -180,7 +180,6 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 
 		fmt.Println(">> BODY: Iniciando  ", r.Body)
-		var p Person
 
 		dec := json.NewDecoder(r.Body)
 		dec.DisallowUnknownFields()
