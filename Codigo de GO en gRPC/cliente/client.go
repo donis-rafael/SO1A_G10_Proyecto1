@@ -11,6 +11,8 @@ import (
 	"fmt"
 	"log"
 
+	"strconv"
+
 	"net/http"
 
 	"clientgrpc/greet.pb/greetpb"
@@ -23,7 +25,7 @@ type server struct{}
 type Person struct {
 	name         string
 	location     string
-	age          string
+	age          int
 	infectedtype string
 	state        string
 }
@@ -88,7 +90,9 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Comprobamos el tipo de peticion HTTP
+	fmt.Fprintf(w, "Recibido = %s\n", r.Body)
 	switch r.Method {
+
 	// Devolver una página sencilla con una forma html para enviar un mensaje
 	case "GET":
 		fmt.Println(">> CLIENT: Devolviendo form.html")
@@ -114,7 +118,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		name := p.name
 		// Obtener el mensaje enviado desde la forma
 		location := p.location
-		age := p.age
+		age := strconv.Itoa(p.age)
 		infectedtype := p.infectedtype
 		state := p.state
 
