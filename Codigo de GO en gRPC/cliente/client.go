@@ -104,9 +104,10 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	dec.DisallowUnknownFields()
 
 	var p Person
-	err := json.NewDecoder(r.Body).Decode(&p)
+	err := dec.Decode(&p)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		fmt.Println(">> CLIENT: Error en recepcion ", err.Error())
 		return
 	}
 	fmt.Println(">> CLIENT: Recibiendo: ", p)
