@@ -165,6 +165,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 			log.Println(err.Error())
 			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		}
+		fmt.Println(">> CLIENT: Error Recibiendo: ", err.Error())
 		return
 	}
 
@@ -176,6 +177,8 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	if err != io.EOF {
 		msg := "Request body must only contain a single JSON object"
 		http.Error(w, msg, http.StatusBadRequest)
+		fmt.Println(">> CLIENT: Error 2 Recibiendo: ", err.Error())
+
 		return
 	}
 	fmt.Println(">> CLIENT: Recibiendo: ", p)
