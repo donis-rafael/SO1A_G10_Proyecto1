@@ -48,7 +48,7 @@ func (*server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.G
 	jsonData := map[string]string{"name": Name, "location": Location, "age": Age, "infectedtype": Infectedtype, "state": State}
 	jsonValue, _ := json.Marshal(jsonData)
 	//client := &http.Client{}
-	request, err := http.Post("http://node:3000/subscribers", "application/json", bytes.NewBuffer(jsonValue))
+	request, err := http.Post("http://34.121.234.71:3000/subscribers", "application/json", bytes.NewBuffer(jsonValue))
 	if err != nil {
 		fmt.Print(err.Error())
 	}

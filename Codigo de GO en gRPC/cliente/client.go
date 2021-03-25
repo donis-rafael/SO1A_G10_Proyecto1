@@ -4,6 +4,7 @@ package main
 // Importar dependencias, notar que estamos en un módulo llamado tuiterclient
 import (
 	"context"
+	"encoding/json"
 
 	"os"
 
@@ -18,6 +19,14 @@ import (
 )
 
 type server struct{}
+
+type Person struct {
+	name         string
+	location     string
+	age          string
+	infectedtype string
+	state        string
+}
 
 // Funcion que realiza una llamada unaria
 func sendMessage(name string, location string, age string, infectedtype string, state string) {
@@ -72,6 +81,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	instance_name := os.Getenv("NAME")
 	fmt.Println(">> CLIENT: Manejando peticion HTTP CLIENTE: ", instance_name)
 	// Comprobamos que el path sea exactamente '/' sin parámetros
+
 	if r.URL.Path != "/" {
 		http.Error(w, "404 not found.", http.StatusNotFound)
 		return
@@ -89,18 +99,24 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	case "POST":
 		fmt.Println(">> CLIENT: Iniciando envio de mensajes")
 		// Si existe un error con la forma enviada entonces no seguir
-		if err := r.ParseForm(); err != nil {
-			fmt.Fprintf(w, "ParseForm() err: %v", err)
+		//if err := r.ParseForm(); err != nil {
+		//	fmt.Fprintf(w, "ParseForm() err: %v", err)
+		//	return
+		//}
+		var p Person
+		err := json.NewDecoder(r.Body).Decode(&p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
 		// Obtener el nombre enviado desde la forma
-		name := r.FormValue("name")
+		name := p.name
 		// Obtener el mensaje enviado desde la forma
-		location := r.FormValue("location")
-		age := r.FormValue("age")
-		infectedtype := r.FormValue("type")
-		state := r.FormValue("state")
+		location := p.location
+		age := p.age
+		infectedtype := p.infectedtype
+		state := p.state
 
 		// Publicar el mensaje, convertimos el objeto JSON a String
 		sendMessage(name, location, age, infectedtype, state)

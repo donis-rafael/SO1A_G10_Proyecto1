@@ -17,28 +17,6 @@ services:
       - "5001:5000"
     networks:
       - grpctuiter
-  node:
-    restart: on-failure
-    build: ./nodejsapp
-    depends_on: 
-      - mongo
-    ports:
-      - 3000:3000
-    networks:
-      - grpctuiter
-    volumes:
-      - ./:/code
-  mongo:
-    image: mongo
-    ports:
-      - 27017:27017
-    networks:
-      - grpctuiter
-    volumes:
-      - mongodb:/data/db
-volumes:
- mongodb:
-  
 
 networks:
   grpctuiter:
