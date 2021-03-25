@@ -45,7 +45,7 @@ func (*server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.G
 	fmt.Printf(">> SERVER: %s\n", result)
 	// Creamos un nuevo objeto GreetResponse definido en el protofile
 
-	jsonData := map[string]string{"name": Name, "location": Location, "age": Age, "infectedtype": Infectedtype, "state": State}
+	jsonData := map[string]string{"name": Name, "location": Location, "age": Age, "infectedtype": Infectedtype, "state": State, "origen": "grpc"}
 	jsonValue, _ := json.Marshal(jsonData)
 	//client := &http.Client{}
 	request, err := http.Post("http://34.121.234.71:3000/subscribers", "application/json", bytes.NewBuffer(jsonValue))

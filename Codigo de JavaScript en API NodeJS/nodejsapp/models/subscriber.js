@@ -20,6 +20,10 @@ const subscriberSchema = new mongoose.Schema({
   state: {
     type: String,
     required: true 
+  },
+  state: {
+    origen: String,
+    required: true 
   }
 })
 

@@ -112,7 +112,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 
 		myBody := ioutil.NopCloser(bytes.NewBuffer(body))
 
-		fmt.Println(">> BODY: Iniciando  ", myBody)
+		//fmt.Println(">> BODY: Iniciando  ", myBody)
 
 		//buf := new(bytes.Buffer)
 		//buf.ReadFrom(myBody)
@@ -122,7 +122,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		dec.DisallowUnknownFields()
 		erre := dec.Decode(&p3)
 		//json.Unmarshal([]byte(buf.String()), &data)
-		fmt.Println("Nombre: ", p3.Name)
+		//fmt.Println("Nombre: ", p3.Name)
 		//fmt.Println(">> BODY: Iniciando 2 ", buf.String())
 
 		// var p Person
@@ -148,9 +148,9 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "¡Mensaje Publicado!\n")
 		fmt.Fprintf(w, "Name = %s\n", name)
 		fmt.Fprintf(w, "Location = %s\n", location)
-		fmt.Fprintf(w, "Age = %s\n", age)
-		fmt.Fprintf(w, "Type = %s\n", infectedtype)
-		fmt.Fprintf(w, "State = %s\n", state)
+		//fmt.Fprintf(w, "Age = %s\n", age)
+		//fmt.Fprintf(w, "Type = %s\n", infectedtype)
+		//fmt.Fprintf(w, "State = %s\n", state)
 
 	// Cualquier otro metodo no sera soportado
 	default:

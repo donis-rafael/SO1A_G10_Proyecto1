@@ -24,7 +24,8 @@ router.post('/', async (req, res) => {
     location: req.body.location,
     age: req.body.age,
     infectedtype: req.body.infectedtype,
-    state: req.body.state
+    state: req.body.state,
+    origen: req.body.origen
     
   })
   try {
