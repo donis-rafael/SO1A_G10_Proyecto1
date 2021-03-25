@@ -20,6 +20,8 @@ import (
 
 	"clientgrpc/greet.pb/greetpb"
 
+	"github.com/golang/gddo/httputil/header"
+
 	"google.golang.org/grpc"
 )
 
@@ -96,6 +98,17 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	// Use http.MaxBytesReader to enforce a maximum read of 1MB from the
 	// response body. A request body larger than that will now result in
 	// Decode() returning a "http: request body too large" error.
+
+	if r.Header.Get("Content-Type") != "" {
+		value, _ := header.ParseValueAndParams(r.Header, "Content-Type")
+		if value != "application/json" {
+			msg := "Content-Type header is not application/json"
+			http.Error(w, msg, http.StatusUnsupportedMediaType)
+			fmt.Println("Content-Type header is not application/json")
+			return
+		}
+	}
+
 	fmt.Println(">> CLIENT: Recibiendo body: ", r)
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 
