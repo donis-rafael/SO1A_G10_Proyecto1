@@ -72,11 +72,11 @@ func sendMessage(name string, location string, age string, infectedtype string, 
 // Creamos un server sencillo que unicamente acepte peticiones GET y POST a '/'
 func http_server(w http.ResponseWriter, r *http.Request) {
 	type Person struct {
-		name         string `json:"name"`
-		location     string `json:"location"`
-		age          int    `json:"age"`
-		infectedtype string `json:"infectedtype"`
-		state        string `json:"state"`
+		Name         string `json:"name"`
+		Location     string `json:"location"`
+		Age          int    `json:"age"`
+		Infectedtype string `json:"infectedtype"`
+		State        string `json:"state"`
 	}
 
 	if r.URL.Path != "/" {
@@ -127,7 +127,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		var p Person
 
 		dec = json.NewDecoder(myBody)
-		//dec.DisallowUnknownFields()
+		dec.DisallowUnknownFields()
 		erre = dec.Decode(&p)
 		if erre != nil {
 
