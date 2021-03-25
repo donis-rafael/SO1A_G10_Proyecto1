@@ -96,6 +96,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	// Use http.MaxBytesReader to enforce a maximum read of 1MB from the
 	// response body. A request body larger than that will now result in
 	// Decode() returning a "http: request body too large" error.
+	fmt.Println(">> CLIENT: Recibiendo body: ", r)
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 
 	// Setup the decoder and call the DisallowUnknownFields() method on it.
