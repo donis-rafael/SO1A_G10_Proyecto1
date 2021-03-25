@@ -3,7 +3,6 @@ package main
 
 // Importar dependencias, notar que estamos en un módulo llamado tuiterclient
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -11,7 +10,6 @@ import (
 	"strings"
 
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 
@@ -154,13 +152,13 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		body, errs := ioutil.ReadAll(r.Body)
-		if errs != nil {
-			log.Printf("Error reading body: %v", errs)
-			http.Error(w, "can't read body", http.StatusBadRequest)
-			return
-		}
-		r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
+		// body, errs := ioutil.ReadAll(r.Body)
+		// if errs != nil {
+		// 	log.Printf("Error reading body: %v", errs)
+		// 	http.Error(w, "can't read body", http.StatusBadRequest)
+		// 	return
+		// }
+		// r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 
 		fmt.Println(">> BODY: Iniciando  ", r.Body)
 		var p Person
