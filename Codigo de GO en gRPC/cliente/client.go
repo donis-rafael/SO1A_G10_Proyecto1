@@ -125,21 +125,21 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Nombre: ", p3.Name)
 		//fmt.Println(">> BODY: Iniciando 2 ", buf.String())
 
-		var p Person
+		// var p Person
 
-		dec = json.NewDecoder(myBody)
-		dec.DisallowUnknownFields()
-		erre = dec.Decode(&p)
+		// dec = json.NewDecoder(myBody)
+		// dec.DisallowUnknownFields()
+		//erre = dec.Decode(&p3)
 		if erre != nil {
 
 		}
 		// Obtener el nombre enviado desde la forma
-		name := p.Name //r.FormValue("name")
+		name := p3.Name //r.FormValue("name")
 		// Obtener el mensaje enviado desde la forma
-		location := p.Location //r.FormValue("location")
-		age := strconv.Itoa(p.Age)
-		infectedtype := p.Infectedtype
-		state := p.State
+		location := p3.Location //r.FormValue("location")
+		age := strconv.Itoa(p3.Age)
+		infectedtype := p3.Infectedtype
+		state := p3.State
 
 		// Publicar el mensaje, convertimos el objeto JSON a String
 		sendMessage(name, location, age, infectedtype, state)
