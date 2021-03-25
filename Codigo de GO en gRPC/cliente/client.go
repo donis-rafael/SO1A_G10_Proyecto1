@@ -115,6 +115,9 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 
 		buf := new(bytes.Buffer)
 		buf.ReadFrom(myBody)
+		data := Person{}
+		json.Unmarshal([]byte(buf.String()), &data)
+		fmt.Printf("Nombre: %s", data.name)
 		fmt.Println(">> BODY: Iniciando 2 ", buf.String())
 
 		var p Person
