@@ -183,7 +183,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 
 		dec := json.NewDecoder(r.Body)
 		dec.DisallowUnknownFields()
-		err := dec.Decode(&p)
+		//err := dec.Decode(&p)
 		if err != nil {
 			var syntaxError *json.SyntaxError
 			var unmarshalTypeError *json.UnmarshalTypeError
