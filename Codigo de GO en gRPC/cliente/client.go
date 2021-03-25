@@ -25,11 +25,11 @@ import (
 type server struct{}
 
 type Person struct {
-	name         string
-	location     string
-	age          int
-	infectedtype string
-	state        string
+	name         string `json:"name,omitempty"`
+	location     string `json:"location,omitempty"`
+	age          int    `json:"age,omitempty"`
+	infectedtype string `json:"infectedtype,omitempty"`
+	state        string `json:"state,omitempty"`
 }
 
 // Funcion que realiza una llamada unaria
