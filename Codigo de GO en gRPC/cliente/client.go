@@ -212,8 +212,14 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		respBody, err := ioutil.ReadAll(r.Body)
-		fmt.Println(">> BODY: Iniciando  ", respBody, err.Error())
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			log.Printf("Error reading body: %v", err)
+			http.Error(w, "can't read body", http.StatusBadRequest)
+			return
+		}
+
+		fmt.Println(">> BODY: Iniciando  ", body)
 
 		// Obtener el nombre enviado desde la forma
 		name := r.FormValue("name")
