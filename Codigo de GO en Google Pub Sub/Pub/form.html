@@ -1,0 +1,22 @@
+<html>
+
+<head>
+    <title>Pub/Sub</title>
+</head>
+
+<body>
+    <div>
+        <p>Last ten messages received by this instance:</p>
+        <ul>
+            {{ range . }}
+            <li>{{ . }}</li>
+            {{ end }}
+        </ul>
+    </div>
+    <form method="post" action="/" name="formulary" target="_blank">
+        <textarea name="msg" placeholder="Enter message here"></textarea>
+        <input type="submit">
+    </form>
+</body>
+
+</html>`))

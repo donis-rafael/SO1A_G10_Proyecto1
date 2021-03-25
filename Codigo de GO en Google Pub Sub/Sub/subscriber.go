@@ -5,17 +5,23 @@ import (
 	"fmt"
 	//"io"
 	"sync"
+	"log"
 
 	"cloud.google.com/go/pubsub"
 )
 
-func pullMsgs() error {
+func main(){
+	fmt.Println("A la espera de mensajes...")
+
 	projectID := "august-edge-306320"
 	subID := "mensaje"
+
 	ctx := context.Background()
+	
 	client, err := pubsub.NewClient(ctx, projectID)
 	if err != nil {
-			return fmt.Errorf("pubsub.NewClient: %v", err)
+			//return fmt.Errorf("pubsub.NewClient: %v", err)
+			log.Fatal(err)
 	}
 
 	// Consume 10 messages.
@@ -29,18 +35,13 @@ func pullMsgs() error {
 			fmt.Println("Got message: %q\n", string(msg.Data))
 			msg.Ack()
 			received++
-			if received == 10 {
+			if received == 100 {
 					cancel()
 			}
 	})
 	if err != nil {
-			return fmt.Errorf("Receive: %v", err)
+			//return fmt.Errorf("Receive: %v", err)
+			log.Fatal(err)
 	}
-	return nil
-}
 
-func main(){
-	fmt.Println("A la espera de mensajes...")
-
-	pullMsgs()
 }
