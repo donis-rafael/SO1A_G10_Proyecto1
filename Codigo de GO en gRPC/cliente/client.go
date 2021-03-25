@@ -21,18 +21,6 @@ import (
 
 type server struct{}
 
-type Person struct {
-	name         string `json:"name"`
-	location     string `json:"location"`
-	age          int    `json:"age"`
-	infectedtype string `json:"infectedtype"`
-	state        string `json:"state"`
-}
-
-type HttpReq struct {
-	HttpReq Person `json:"httpReq"`
-}
-
 // Funcion que realiza una llamada unaria
 func sendMessage(name string, location string, age string, infectedtype string, state string) {
 	server_host := os.Getenv("SERVER_HOST")
@@ -83,6 +71,13 @@ func sendMessage(name string, location string, age string, infectedtype string, 
 
 // Creamos un server sencillo que unicamente acepte peticiones GET y POST a '/'
 func http_server(w http.ResponseWriter, r *http.Request) {
+	type Person struct {
+		name         string `json:"name"`
+		location     string `json:"location"`
+		age          int    `json:"age"`
+		infectedtype string `json:"infectedtype"`
+		state        string `json:"state"`
+	}
 	instance_name := os.Getenv("NAME")
 	fmt.Println(">> CLIENT: Manejando peticion HTTP CLIENTE: ", instance_name)
 	// Comprobamos que el path sea exactamente '/' sin parámetros
