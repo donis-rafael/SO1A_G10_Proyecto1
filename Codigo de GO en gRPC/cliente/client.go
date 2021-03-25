@@ -162,7 +162,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 			fieldName := strings.TrimPrefix(err.Error(), "json: unknown field ")
 			msg := fmt.Sprintf("Request body contains unknown field %s", fieldName)
 			http.Error(w, msg, http.StatusBadRequest)
-			fmt.Println(">> CLIENT: Error 13 Recibiendo: ", err.Error())
+			fmt.Println(">> CLIENT: Error 13 Recibiendo: ", p)
 
 		// An io.EOF error is returned by Decode() if the request body is
 		// empty.
