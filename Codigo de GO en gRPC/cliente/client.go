@@ -3,6 +3,7 @@ package main
 
 // Importar dependencias, notar que estamos en un módulo llamado tuiterclient
 import (
+	"bytes"
 	"context"
 
 	"fmt"
@@ -218,6 +219,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "can't read body", http.StatusBadRequest)
 			return
 		}
+		r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 
 		fmt.Println(">> BODY: Iniciando  ", body)
 
