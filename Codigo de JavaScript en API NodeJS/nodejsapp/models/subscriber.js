@@ -21,8 +21,8 @@ const subscriberSchema = new mongoose.Schema({
     type: String,
     required: true 
   },
-  state: {
-    origen: String,
+  origen: {
+    type: String,
     required: true 
   }
 })
