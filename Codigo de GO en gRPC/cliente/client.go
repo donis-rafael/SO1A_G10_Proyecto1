@@ -104,16 +104,15 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	case "POST":
 		fmt.Println(">> CLIENT: Iniciando envio de mensajes")
 
-
 		decoder := json.NewDecoder(request.Body)
 
 		var p1 Person
 		err := decoder.Decode(&p1)
-	
+
 		if err != nil {
 			panic(err)
 		}
-	
+
 		fmt.Println(t.Test)
 
 		//Si existe un error con la forma enviada entonces no seguir
@@ -131,21 +130,21 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 
 		r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 
-		fmt.Println(">> BODY: Iniciando  ", r.Body.)
+		fmt.Println(">> BODY: Iniciando  ", r.Body)
 
 		var p Person
 
-		dec := json.NewDecoder(r.Body.
+		dec := json.NewDecoder(r.Body)
 		//dec.DisallowUnknownFields()
-		err := dec.Decode(&p)
-		if err != nil {
+		erre := dec.Decode(&p)
+		if erre != nil {
 
 		}
 		// Obtener el nombre enviado desde la forma
 		name := p1.name //r.FormValue("name")
 		// Obtener el mensaje enviado desde la forma
-		location := p.location //r.FormValue("location")
-		age := r.FormValue("age")    //strconv.Itoa(p.age)
+		location := p.location    //r.FormValue("location")
+		age := r.FormValue("age") //strconv.Itoa(p.age)
 		infectedtype := r.FormValue("infectedtype")
 		state := r.FormValue("state")
 
