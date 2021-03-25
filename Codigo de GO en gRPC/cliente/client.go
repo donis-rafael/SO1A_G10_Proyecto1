@@ -83,7 +83,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	var p1 Person
 	body, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(body, &p1)
-	fmt.Println(">> CLIENT NEW: Devolviendo form.html", p1)
+	fmt.Println(">> CLIENT NEW: Devolviendo form.html", p1.name)
 
 	instance_name := os.Getenv("NAME")
 	fmt.Println(">> CLIENT: Manejando peticion HTTP CLIENTE: ", instance_name)
