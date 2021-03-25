@@ -181,7 +181,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		var p Person
 
 		dec := json.NewDecoder(r.Body)
-		dec.DisallowUnknownFields()
+		//dec.DisallowUnknownFields()
 		err := dec.Decode(&p)
 		if err != nil {
 			var syntaxError *json.SyntaxError
