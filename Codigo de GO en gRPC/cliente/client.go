@@ -221,7 +221,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		}
 		r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 
-		fmt.Println(">> BODY: Iniciando  ", body)
+		fmt.Println(">> BODY: Iniciando  ", r.Body)
 
 		// Obtener el nombre enviado desde la forma
 		name := r.FormValue("name")
