@@ -1,0 +1,33 @@
+version: "3.3"
+services:
+  servern:
+    image: nats:2.2.0
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+      - "6222:6222"
+    restart: always
+    tty: true
+    networks:
+      - Nats    
+
+  emisor:
+    build: ./Sender
+    ports:
+      - "80:80"
+    depends_on:
+      - servern
+    networks: 
+      - Nats        
+
+  receptor:
+    build: ./Receiver
+    restart: on-failure
+    depends_on:
+      - servern
+    networks:
+      - Nats        
+
+networks: 
+    Nats:
+      driver: bridge      
