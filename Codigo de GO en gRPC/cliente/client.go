@@ -90,7 +90,8 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Comprobamos el tipo de peticion HTTP
-	fmt.Fprintf(w, "Recibido = %s\n", r.Body)
+	fmt.Println(">> CLIENT: Recibiendo: ", r.Body)
+
 	switch r.Method {
 
 	// Devolver una página sencilla con una forma html para enviar un mensaje
