@@ -66,14 +66,16 @@ class MessageTraffic(HttpUser):
             data_to_send = json.dumps(random_data)
             printDebug (data_to_send)
 
-            self.client.post("/", json=random_data)
+            myheaders = {'Content-Type': 'application/json', 'Accept': 'application/json'}
+            self.client.post("/", data= json.dumps(random_data), headers = myheaders)
+            #self.client.post("/", json=random_data)
 
         else:
             print(">> MessageTraffic: Envio de tráfico finalizado, no hay más datos que enviar.")
             self.stop(True)
 
     # Este es una de las tareas que se ejecutara cada vez que pase el tiempo wait_time
-    @task
-    def GetMessages(self):
+    #@task
+    #def GetMessages(self):
         # Realizar una peticion para recibir los datos que hemos guardado
-        self.client.get("/")
+        #self.client.get("/")
