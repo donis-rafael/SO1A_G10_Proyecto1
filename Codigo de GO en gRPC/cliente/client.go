@@ -104,17 +104,6 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	case "POST":
 		fmt.Println(">> CLIENT: Iniciando envio de mensajes")
 
-		decoder := json.NewDecoder(r.Body)
-
-		var p1 Person
-		err := decoder.Decode(&p1)
-
-		if err != nil {
-			panic(err)
-		}
-
-		fmt.Println(p1.name)
-
 		//Si existe un error con la forma enviada entonces no seguir
 		if err := r.ParseForm(); err != nil {
 			fmt.Fprintf(w, "ParseForm() err: %v", err)
