@@ -130,7 +130,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 
 		}
 		// Obtener el nombre enviado desde la forma
-		name := p1.name //r.FormValue("name")
+		name := p.name //r.FormValue("name")
 		// Obtener el mensaje enviado desde la forma
 		location := p.location    //r.FormValue("location")
 		age := r.FormValue("age") //strconv.Itoa(p.age)
