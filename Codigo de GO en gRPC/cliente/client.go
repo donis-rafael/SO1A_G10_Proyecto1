@@ -103,49 +103,48 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	// Publicar un mensaje a Google PubSub
 	case "POST":
 		fmt.Println(">> CLIENT: Iniciando envio de mensajes")
+
+
+		decoder := json.NewDecoder(request.Body)
+
+		var p1 Person
+		err := decoder.Decode(&p1)
+	
+		if err != nil {
+			panic(err)
+		}
+	
+		fmt.Println(t.Test)
+
 		//Si existe un error con la forma enviada entonces no seguir
 		if err := r.ParseForm(); err != nil {
 			fmt.Fprintf(w, "ParseForm() err: %v", err)
 			return
 		}
 
-		// Read the Body content
-		var bodyBytes []byte
-		if context.Request().Body != nil {
-			bodyBytes, _ = ioutil.ReadAll(context.Request().Body)
-		}
-
-		// Restore the io.ReadCloser to its original state
-		context.Request().Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
-
-		// Continue to use the Body, like Binding it to a struct:
-		order := new(Person)
-		error := context.Bind(order)
-
 		body, errs := ioutil.ReadAll(r.Body)
 		if errs != nil {
-			log.Printf("Error reading body: %v", error)
+			log.Printf("Error reading body: %v", errs)
 			http.Error(w, "can't read body", http.StatusBadRequest)
 			return
 		}
 
 		r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 
-		fmt.Println(">> BODY: Iniciando  ", r.Body)
-		fmt.Println(">> BODY: Continuando  ", order)
+		fmt.Println(">> BODY: Iniciando  ", r.Body.)
 
 		var p Person
 
-		dec := json.NewDecoder(r.Body)
+		dec := json.NewDecoder(r.Body.
 		//dec.DisallowUnknownFields()
 		err := dec.Decode(&p)
 		if err != nil {
 
 		}
 		// Obtener el nombre enviado desde la forma
-		name := p.name //r.FormValue("name")
+		name := p1.name //r.FormValue("name")
 		// Obtener el mensaje enviado desde la forma
-		location := people2.location //r.FormValue("location")
+		location := p.location //r.FormValue("location")
 		age := r.FormValue("age")    //strconv.Itoa(p.age)
 		infectedtype := r.FormValue("infectedtype")
 		state := r.FormValue("state")
