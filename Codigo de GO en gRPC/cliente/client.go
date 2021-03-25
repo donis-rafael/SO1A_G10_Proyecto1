@@ -5,10 +5,10 @@ package main
 import (
 	"context"
 
-	"os"
-
 	"fmt"
+	"io/ioutil"
 	"log"
+	"os"
 
 	"net/http"
 
@@ -211,6 +211,9 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "ParseForm() err: %v", err)
 			return
 		}
+
+		respBody, err := ioutil.ReadAll(r.Body)
+		fmt.Println(">> BODY: Iniciando  ", respBody)
 
 		// Obtener el nombre enviado desde la forma
 		name := r.FormValue("name")
