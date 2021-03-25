@@ -115,16 +115,20 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 
 		buf := new(bytes.Buffer)
 		buf.ReadFrom(myBody)
-		data := Person{}
-		json.Unmarshal([]byte(buf.String()), &data)
-		fmt.Println("Nombre: %s", data.name)
+
+		var p3 Person
+		dec := json.NewDecoder(myBody)
+		//dec.DisallowUnknownFields()
+		erre := dec.Decode(&p3)
+		//json.Unmarshal([]byte(buf.String()), &data)
+		fmt.Println("Nombre: ", p3.name)
 		fmt.Println(">> BODY: Iniciando 2 ", buf.String())
 
 		var p Person
 
-		dec := json.NewDecoder(myBody)
+		dec = json.NewDecoder(myBody)
 		//dec.DisallowUnknownFields()
-		erre := dec.Decode(&p)
+		erre = dec.Decode(&p)
 		if erre != nil {
 
 		}
