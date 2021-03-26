@@ -17,10 +17,38 @@ router.get('/origen/', async (req, res) => {
     var query = { origen: req.body.origen };
     const subscribers = await Subscriber.find(query)
     res.json(subscribers)
+    
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
 })
+
+
+router.get('/totalorigen/', async (req, res) => {
+  try {
+    //var query = { origen: req.body.origen };
+    //const subscribers = await Subscriber.find(query)
+    //res.json(subscribers)
+    const subscribers = await Subscriber.find()
+    
+    subscribers.col.aggregate(
+      [
+          { "$group": {
+              "origen": "$ssubscribers",
+              "count": { "$sum": 1 }
+          }}
+      ],
+      function(err,docs) {
+         if (err) console.log(err);
+         console.log( docs );
+      }
+  );
+  res.json(subscribers)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 
 // Getting One
 router.get('/:id', getSubscriber, (req, res) => {
