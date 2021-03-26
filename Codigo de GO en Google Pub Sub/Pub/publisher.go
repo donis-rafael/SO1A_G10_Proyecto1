@@ -35,7 +35,7 @@ func publish(msg string) error {
 
 	client, err := pubsub.NewClient(ctx, projectID)
 	if err != nil {
-		fmt.Println("Error")
+		fmt.Println("Error encontrado")
 		return fmt.Errorf("Error al conectarse %v", err)
 	}
 
@@ -47,7 +47,7 @@ func publish(msg string) error {
 	if err != nil {
 		fmt.Println("error")
 		fmt.Println(err)
-		return fmt.Errorf("Error: %v",err)
+		return fmt.Errorf("Error encontrado: %v",err)
 	}
 
 	fmt.Println("Published a message; msg ID: %v\n", id)
@@ -55,7 +55,19 @@ func publish(msg string) error {
 }
 
 type Message struct {
-	Msg  string
+	//Msg  string
+	name string
+	location string
+	age string
+	infectedtype string
+	state string
+	origen string
+}
+
+func failOnError(err error, msg string) {
+	if err != nil {
+		log.Fatalf("%s: %s", msg, err)
+	}
 }
 
 
@@ -67,9 +79,9 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 
     switch r.Method {
 		case "GET":     
-			//http.ServeFile(w, r, "form.html")
-			w.WriteHeader(http.StatusOK)
-			w.Write([]byte("{\"message\": \"ok gRPC\"}"))
+			http.ServeFile(w, r, "form.html")
+			/*w.WriteHeader(http.StatusOK)
+			w.Write([]byte("{\"message\": \"ok gRPC\"}"))*/
 			return
 
 		case "POST":
@@ -81,20 +93,25 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 			// Obtener el nombre enviado desde la forma
 			//name := r.FormValue("name")
 			// Obtener el mensaje enviado desde la forma
-			//msg := r.FormValue("msg")
+			msg := r.FormValue("msg")
+			fmt.Println(string(msg))
 
-			var body map[string]interface{}
+			/*var body map[string]interface{}
 			err := json.NewDecoder(r.Body).Decode(&body)
 			failOnError(err, "Parsing JSON")
-			body["way"] = "PubSub"
+			body["origen"] = "PubSub"*/
 
-			//message, err := json.Marshal(Message{Msg: msg })
-			message, err := json.Marshal(body)
+			
+			message, err := json.Marshal(msg)
+			//message, err := json.Marshal(Message{name: "asdf" , location:"loc", age: "23", infectedtype: "asd", state: "as", origen: "w4" })
+			//message, err := json.Marshal(body)
 			// Existio un error generando el objeto JSON
 			if err != nil {
 				fmt.Fprintf(w, "ParseForm() err: %v", err)
 				return
 			}
+
+			fmt.Println(string(message))
 
 			publish(string(message))
 
