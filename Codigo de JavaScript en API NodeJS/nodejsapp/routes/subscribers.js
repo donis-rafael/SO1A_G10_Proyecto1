@@ -14,7 +14,8 @@ router.get('/', async (req, res) => {
 
 router.get('/origen/', async (req, res) => {
   try {
-    const subscribers = await Subscriber.find({ where: { origen: req.body.origen } })
+    var query = { origen: req.body.origen };
+    const subscribers = await Subscriber.find(query)
     res.json(subscribers)
   } catch (err) {
     res.status(500).json({ message: err.message })
